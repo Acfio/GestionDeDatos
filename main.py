@@ -1,20 +1,48 @@
-import sys, time, os, subprocess, hashlib
+import sys, time, os, subprocess, bcrypt, sqlite3
+from getpass import getpass
 
-usuarios = []
+# Conectar a la base de datos (si no existe, se creará)
+conn = sqlite3.connect('login.db')
+cursor = conn.cursor()
 
-def hash_password(user, password):
-    return hashlib.sha256(password.encode()).hexdigest()
+# Crear la tabla de usuarios (si no existe)
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+)
+''')
 
-def decode_password(usuarios):
-    return hashlib.sha256(password.decode())
+conn.commit()
 
-def resgistrar_usuario(user, password):
-    usuario_decript = decode_password(usuarios)
-    if user in usuarios:
-        print("El usuario ya está registrado")
+# Función para registrar un nuevo usuario
+def registrar_usuario(username, password):
+    # Hashear la contraseña
+    password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    
+    try:
+        # Insertar el nuevo usuario en la base de datos
+        cursor.execute('INSERT INTO usuarios (username, password_hash) VALUES (?, ?)', (username, password_hash))
+        conn.commit()
+        print(f"\nUsuario {username} registrado correctamente.")
+    except sqlite3.IntegrityError:
+        print(f"\nError: El usuario {username} ya está registrado.")
+
+# Función para iniciar sesión
+def iniciar_sesion(username, password):
+    cursor.execute('SELECT password_hash FROM usuarios WHERE username = ?', (username,))
+    row = cursor.fetchone()
+
+    if row:
+        password_hash = row[0]
+        # Verificar si la contraseña coincide
+        if bcrypt.checkpw(password.encode(), password_hash):
+            print("\nInicio de sesión exitoso.")
+        else:
+            print("\nContraseña incorrecta.")
     else:
-        usuarios = hash_password(user, password)
-        print(usuario_decript)
+        print("Usuario no encontrado.")
 
 def login():
     while True:
@@ -28,14 +56,20 @@ def login():
 
         if option == '1':
             clear()
-            user = input("Introduce el nombre de usuario: ")
-            password = input("Introduce la contrsaeña: ")
-            usuarios = resgistrar_usuario(user, password)
-            input()
+            username = input("Introduce el nombre de usuario: ")
+            password = getpass("Introduce la contrsaeña: ")
+            registrar_usuario(username, password)
+            time.sleep(1)
             login()
+        
         elif option == '2':
             clear()
-            input("\nExito 2")
+            username = input("Introduce el nombre de usuario: ")
+            password = getpass("Introduce la contaseña: ")
+            iniciar_sesion(username, password)
+            time.sleep(1)
+            break
+
         elif option == '3':
             clear()
             print("Saliendo del programa...")
