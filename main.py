@@ -29,9 +29,15 @@ def registrar_usuario(username, password):
         # Insertar el nuevo usuario en la base de datos
         cursor.execute('INSERT INTO usuarios (username, password_hash) VALUES (?, ?)', (username, password_hash))
         conn.commit()
-        print(f"\n[bold green]Usuario {username} registrado correctamente.")
+        clear()
+        with console.status("[bold green]Registrando...[/]", spinner="dots"):
+            time.sleep(2)
+        input(f"Usuario {username} registrado correctamente...")
     except sqlite3.IntegrityError:
-        print(f"\n[bold green]Error: El usuario {username} ya está registrado.")
+        clear()
+        with console.status("[bold green]Registrando...[/]", spinner="dots"):
+            time.sleep(2)
+        input(f"Error: El usuario {username} ya está registrado...")
 
 # Función para iniciar sesión
 def iniciar_sesion(username, password):
