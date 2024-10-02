@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 conn.commit()
 
+sesion_iniciada = False
+
 # Función para registrar un nuevo usuario
 def registrar_usuario(username, password):
     # Hashear la contraseña
@@ -41,6 +43,7 @@ def registrar_usuario(username, password):
 
 # Función para iniciar sesión
 def iniciar_sesion(username, password):
+    global sesion_iniciada
     cursor.execute('SELECT password_hash FROM usuarios WHERE username = ?', (username,))
     row = cursor.fetchone()
 
@@ -53,7 +56,7 @@ def iniciar_sesion(username, password):
                 time.sleep(2)
             print("Inicio de sesión exitoso")
             time.sleep(1)
-            set False
+            sesion_iniciada = True
         else:
             clear()
             with console.status("[bold green]Iniciando sesión...[/]", spinner="dots"):
@@ -65,7 +68,8 @@ def iniciar_sesion(username, password):
         print("Usuario no encontrado.")
 
 def login():
-    while True:
+    global sesion_iniciada
+    while not sesion_iniciada:
         clear()
         print("Elige una opción para continuar.")
         print("\n 1) Register")
@@ -106,11 +110,12 @@ def clear():
 
 def main():
     clear()
-    input()
+
 if __name__ == "__main__":
     try:
         clear()
         login()
+        main()
     except KeyboardInterrupt:
         print("\nSaliendo del programma...")
         time.sleep(2)
