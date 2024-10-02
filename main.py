@@ -53,7 +53,7 @@ def iniciar_sesion(username, password):
                 time.sleep(2)
             print("Inicio de sesión exitoso")
             time.sleep(1)
-            main()
+            set False
         else:
             clear()
             with console.status("[bold green]Iniciando sesión...[/]", spinner="dots"):
