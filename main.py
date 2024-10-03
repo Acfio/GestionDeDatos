@@ -112,17 +112,18 @@ def clear():
 def main():
     clear()
     global verificacion
-    while not verificacion
+    while not verificacion:
+        clear()
         with console.status("[bold green]Iniciando el entorno de trabajo"):
-            time.sleep(1)
-            if os.path.exists('datos.txt'):
-                print("Encontrado el archivo con los datos del satelite, procediendo a su apertura y analisis...")
-                print("\nSe procederá a su analisis...")
-                time.sleep(1)
-                verificacion = True
-            else:
-                input("No se ha encontrado el archivo 'datos', por favor, cuando genere el archivo presione enter...")
-    
+            time.sleep(1.7)
+        if os.path.exists('datos.txt'):
+            print("Encontrado el archivo con los datos del satelite, procediendo a su apertura y analisis...")
+            print("\nSe procederá a su analisis...")
+            time.sleep(1.54)
+            verificacion = True
+        else:
+            print("No se ha encontrado el archivo 'datos.txt', por favor, cuando genere el archivo presione enter...")
+            input()
 if __name__ == "__main__":
     try:
         clear()
