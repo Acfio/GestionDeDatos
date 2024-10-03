@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 conn.commit()
 
+verificacion = False
 sesion_iniciada = False
 
 # Función para registrar un nuevo usuario
@@ -110,7 +111,18 @@ def clear():
 
 def main():
     clear()
-
+    global verificacion
+    while not verificacion
+        with console.status("[bold green]Iniciando el entorno de trabajo"):
+            time.sleep(1)
+            if os.path.exists('datos.txt'):
+                print("Encontrado el archivo con los datos del satelite, procediendo a su apertura y analisis...")
+                print("\nSe procederá a su analisis...")
+                time.sleep(1)
+                verificacion = True
+            else:
+                input("No se ha encontrado el archivo 'datos', por favor, cuando genere el archivo presione enter...")
+    
 if __name__ == "__main__":
     try:
         clear()
