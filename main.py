@@ -41,6 +41,11 @@ def registrar_usuario(username, password):
         with console.status("[bold green]Registrando...[/]", spinner="dots"):
             time.sleep(2)
         input(f"Error: El usuario {username} ya está registrado...")
+    except valueError:
+        clear()
+        with console.status("[bold green]Registrando...[/]", spinner="dots"):
+            time.sleep(2)
+        input(f"Introduce unos valores validos...")
 
 # Función para iniciar sesión
 def iniciar_sesion(username, password):
@@ -63,11 +68,13 @@ def iniciar_sesion(username, password):
             with console.status("[bold green]Iniciando sesión...[/]", spinner="dots"):
                 time.sleep(2)
             print("Contraseña incorrecta.")
+            time.sleep(1)
     else:
+        clear()
         with console.status("[bold green]Iniciando sesión...[/]", spinner="dots"):
             time.sleep(2)
         print("Usuario no encontrado.")
-
+        time.sleep(1)
 def login():
     global sesion_iniciada
     while not sesion_iniciada:
@@ -117,14 +124,15 @@ def main():
             time.sleep(1.7)
         if os.path.exists('datos.txt'):
             print("Encontrado el archivo con los datos del satelite, procediendo a su apertura y analisis...")
-            print("\nSe procederá a su analisis...")
-            time.sleep(1.54)
+            time.sleep(2.4)
+            with console.status("[bold green]Analizando el archivo"):
+                time.sleep(1.54)
             verificacion = True
         else:
             print("No se ha encontrado el archivo 'datos.txt', por favor, cuando genere el archivo presione enter...")
             input()
     
-    with open ('datos.txt' 'r') as archivo:
+    with open ('datos.txt', 'r') as archivo:
         lineas = archivo.readlines()
 
     datos = []
