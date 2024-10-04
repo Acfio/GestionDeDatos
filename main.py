@@ -141,7 +141,7 @@ def main():
     presion = []
     altitud = []
 
-    for linea in lineas:
+    for linea in lineas[1:]:
         valores = linea.strip().split(',')
         
         paquetes.append(int(valores[0]))
@@ -157,19 +157,19 @@ def main():
     # Crear una gráfica para Temperatura vs Paquetes
     plt.figure(figsize=(10, 6))
     plt.plot(temperatura, paquetes, marker='o', color='b', label='Temperatura')
-    plt.xlabel('Temperatura (°C)')
-    plt.ylabel('Paquetes')
-    plt.title('Relación entre Paquetes y Temperatura')
+    plt.xlabel('Paquetes')
+    plt.ylabel('Temperatura (Cº)')
+    plt.title('Relación entre Temperatura y Paquetes')
     plt.grid(True)
     plt.legend()
     plt.show()
 
 # Crear una gráfica para Presión vs Paquetes
     plt.figure(figsize=(10, 6))
-    plt.plot(presion, paquetes, marker='o', color='g', label='Presión')
-    plt.xlabel('Presión (hPa)')
-    plt.ylabel('Paquetes')
-    plt.title('Relación entre Paquetes y Presión')
+    plt.plot(paquetes, presion, marker='o', color='g', label='Presión')
+    plt.xlabel('Paquetes')
+    plt.ylabel('Presión (hPa)')
+    plt.title('Relación entre Presión y Paquetes')
     plt.grid(True)
     plt.legend()
     plt.show()
@@ -177,8 +177,8 @@ def main():
 # Crear una gráfica para Altitud vs Paquetes
     plt.figure(figsize=(10, 6))
     plt.plot(altitud, paquetes, marker='o', color='r', label='Altitud')
-    plt.xlabel('Altitud (m)')
-    plt.ylabel('Paquetes')
+    plt.xlabel('Paquetes')
+    plt.ylabel('Altitud (m)')
     plt.title('Relación entre Paquetes y Altitud')
     plt.grid(True)
     plt.legend()
