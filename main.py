@@ -2,6 +2,7 @@ import sys, time, os, subprocess, bcrypt, sqlite3
 from getpass import getpass
 from rich.console import Console
 from rich.progress import track
+import matplotlib.pyplot as plt
 
 console = Console()
 
@@ -135,14 +136,54 @@ def main():
     with open ('datos.txt', 'r') as archivo:
         lineas = archivo.readlines()
 
-    datos = []
+    paquetes = []
+    temperatura = []
+    presion = []
+    altitud = []
 
     for linea in lineas:
-        
         valores = linea.strip().split(',')
-        datos.append(valores)
-    for fila in datos:
-        print(fila)
+        
+        paquetes.append(int(valores[0]))
+        temperatura.append(float(valores[1]))
+        presion.append(float(valores[2]))
+        altitud.append(float(valores[3]))
+
+    print("Paquetes: ", paquetes)
+    print("Temperatura: ", temperatura)
+    print("Presion: ", presion)
+    print("Altitud: ", altitud)
+    
+    # Crear una gráfica para Temperatura vs Paquetes
+    plt.figure(figsize=(10, 6))
+    plt.plot(temperatura, paquetes, marker='o', color='b', label='Temperatura')
+    plt.xlabel('Temperatura (°C)')
+    plt.ylabel('Paquetes')
+    plt.title('Relación entre Paquetes y Temperatura')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# Crear una gráfica para Presión vs Paquetes
+    plt.figure(figsize=(10, 6))
+    plt.plot(presion, paquetes, marker='o', color='g', label='Presión')
+    plt.xlabel('Presión (hPa)')
+    plt.ylabel('Paquetes')
+    plt.title('Relación entre Paquetes y Presión')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# Crear una gráfica para Altitud vs Paquetes
+    plt.figure(figsize=(10, 6))
+    plt.plot(altitud, paquetes, marker='o', color='r', label='Altitud')
+    plt.xlabel('Altitud (m)')
+    plt.ylabel('Paquetes')
+    plt.title('Relación entre Paquetes y Altitud')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
 if __name__ == "__main__":
     try:
         clear()
