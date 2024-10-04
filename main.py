@@ -30,7 +30,7 @@ def registrar_usuario(username, password):
     
     try:
         # Insertar el nuevo usuario en la base de datos
-        cursor.execute('INSERT INTO usuarios (username, password_hash) VALUES (?, ?)', (username, password_hash))
+        cursor.execute('INSyERT INTO usuarios (username, password_hash) VALUES (?, ?)', (username, password_hash))
         conn.commit()
         clear()
         with console.status("[bold green]Registrando...[/]", spinner="dots"):
@@ -113,7 +113,6 @@ def main():
     clear()
     global verificacion
     while not verificacion:
-        clear()
         with console.status("[bold green]Iniciando el entorno de trabajo"):
             time.sleep(1.7)
         if os.path.exists('datos.txt'):
@@ -124,6 +123,18 @@ def main():
         else:
             print("No se ha encontrado el archivo 'datos.txt', por favor, cuando genere el archivo presione enter...")
             input()
+    
+    with open ('datos.txt' 'r') as archivo:
+        lineas = archivo.readlines()
+
+    datos = []
+
+    for linea in lineas:
+        
+        valores = linea.strip().split(',')
+        datos.append(valores)
+    for fila in datos:
+        print(fila)
 if __name__ == "__main__":
     try:
         clear()
